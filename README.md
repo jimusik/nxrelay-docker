@@ -3,7 +3,7 @@
 ## About ##
 NxRelay is an agent for NXCloud which is a fully rebrandable multi-tenancy cloud based DNS filter software by Jahastech. It is developed based on [NxFilter](http://nxfilter.org/p3/) and inherits most of the features of [NxFilter](http://nxfilter.org/p3/).
 
-Container image is based off of Ubuntu:latest minimal with the most current DEB package for NxRelay from [NxFilter](https://nxfilter.org/p3/download/).
+Container image is based off of Ubuntu:latest minimal with the most current DEB package for NxRelay from [NxFilter](https://nxfilter.org/p3/download/).  This whole project is a clone from [Deepwoods](https://github.com/DeepWoods) based on the NxCloud Docker.  All credit goes to Rob Asher.
 
 ## Usage ##
 
