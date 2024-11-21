@@ -12,19 +12,19 @@ Container image is based off of Ubuntu:latest minimal with the most current DEB 
 ```
 docker run -it --name nxcloud \
    -p 53:53/udp \
-   jimusik/nxrelay:latest
+   jimusik/nxrelay:1.1
 ```
 
 #### Detached container with persistent data volumes: ####
 
 ```
 docker run -dt --name nxcloud \
-  -e TZ=America/Chicago \
-  -v nxcconf:/nxrelay/conf \
-  -v nxcdb:/nxrelay/db \
-  -v nxclog:/nxrelay/log \
+  -e TZ=America/Los_Angeles \
+  -v nxrconf:/nxrelay/conf \
+  -v nxrdb:/nxrelay/db \
+  -v nxrlog:/nxrelay/log \
   -p 53:53/udp \
-  jimusik/nxrelay:latest
+  jimusik/nxrelay:1.1
 ```
 
 
@@ -37,26 +37,26 @@ docker run -dt --name nxcloud \
 ## Docker-compose example ##
 
 ```yaml
-version: '3.5'
+version: '1.1'
 
 services:
   nxcloud:
-    image: jimusik/nxrelay:latest
+    image: jimusik/nxrelay:1.1
     container_name: nxrelay
     hostname: nxrelay
     restart: unless-stopped
     environment:
       TZ: "America/Los_Angeles"
     volumes:
-      - nxcconf:/nxrelay/conf
-      - nxclog:/nxrelay/log
-      - nxcdb:/nxrelay/db
+      - nxrconf:/nxrelay/conf
+      - nxrlog:/nxrelay/log
+      - nxrdb:/nxrelay/db
     ports:
       - 53:53/udp
 volumes:
-  nxcconf:
-  nxcdb:
-  nxclog:
+  nxrconf:
+  nxrdb:
+  nxrlog:
 ```
 
 ### Useful Commands ###
@@ -76,7 +76,7 @@ Open a bash shell on running container name: `docker exec -it nxrelay /bin/bash`
 > Remove container & persistent volumes(clean slate): `docker-compose down && docker volume prune`
 
 ## Updating ##
-1. Pull the latest container.  `docker pull jimusik/nxrelay:latest`
+1. Pull the latest container.  `docker pull jimusik/nxrelay:1.1`
 2. Stop and remove the current container.  `docker stop nxrelay && docker rm nxrelay `
 > **Note** If using docker-compose:  `docker-compose down`
 3. Run the new container with the same command from above.  [Detached container](#detached-container-with-persistent-data-volumes)
