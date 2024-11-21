@@ -1,9 +1,9 @@
-# NxCloud #
+# NxRelay #
 
 ## About ##
-NxCloud is a fully rebrandable multi-tenancy cloud based DNS filter software by Jahastech. It is developed based on [NxFilter](http://nxfilter.org/p3/) and inherits most of the features of [NxFilter](http://nxfilter.org/p3/).
+NxRelay is an agent for NXCloud which is a fully rebrandable multi-tenancy cloud based DNS filter software by Jahastech. It is developed based on [NxFilter](http://nxfilter.org/p3/) and inherits most of the features of [NxFilter](http://nxfilter.org/p3/).
 
-Container image is based off of Ubuntu:latest minimal with the most current DEB package for NxCloud from [NxFilter](https://nxfilter.org/p3/download/).
+Container image is based off of Ubuntu:latest minimal with the most current DEB package for NxRelay from [NxFilter](https://nxfilter.org/p3/download/).
 
 ## Usage ##
 
@@ -12,11 +12,7 @@ Container image is based off of Ubuntu:latest minimal with the most current DEB 
 ```
 docker run -it --name nxcloud \
    -p 53:53/udp \
-   -p 19004:19004/udp \
-   -p 80:80 \
-   -p 443:443 \
-   -p 19002-19004:19002-19004 \
-   deepwoods/nxcloud:latest
+   jimusik/nxrelay:latest
 ```
 
 #### Detached container with persistent data volumes: ####
@@ -24,20 +20,16 @@ docker run -it --name nxcloud \
 ```
 docker run -dt --name nxcloud \
   -e TZ=America/Chicago \
-  -v nxcconf:/nxcloud/conf \
-  -v nxcdb:/nxcloud/db \
-  -v nxclog:/nxcloud/log \
+  -v nxcconf:/nxrelay/conf \
+  -v nxcdb:/nxrelay/db \
+  -v nxclog:/nxreloay/log \
   -p 53:53/udp \
-  -p 19004:19004/udp \
-  -p 80:80 \
-  -p 443:443 \
-  -p 19002-19004:19002-19004 \
-  deepwoods/nxcloud:latest
+  jimusik/nxrelay:latest
 ```
 
 
 ## Configuration
-* The admin GUI URL is http://[DOCKER_HOST_SERVER_IP]/admin
+* Must setup the cfg.properties file inside the container using
 * TZ of the container defaults to UTC unless overridden by setting the environment variable to your locale.  [see List of tz time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 
@@ -49,22 +41,18 @@ version: '3.5'
 
 services:
   nxcloud:
-    image: deepwoods/nxcloud:latest
-    container_name: nxcloud
-    hostname: nxcloud
+    image: jimusik/nxrelay:latest
+    container_name: nxrelay
+    hostname: nxrelay
     restart: unless-stopped
     environment:
-      TZ: "America/Chicago"
+      TZ: "America/Los_Angeles"
     volumes:
-      - nxcconf:/nxcloud/conf
-      - nxclog:/nxcloud/log
-      - nxcdb:/nxcloud/db
+      - nxcconf:/nxrelay/conf
+      - nxclog:/nxrelay/log
+      - nxcdb:/nxrelay/db
     ports:
       - 53:53/udp
-      - 19004:19004/udp
-      - 80:80
-      - 443:443
-      - 19002-19004:19002-19004
 volumes:
   nxcconf:
   nxcdb:
@@ -80,7 +68,7 @@ Restart a service: `docker-compose restart nxcloud`
 
 View logs: `docker-compose logs`
 
-Open a bash shell on running container name: `docker exec -it nxcloud /bin/bash`
+Open a bash shell on running container name: `docker exec -it nxrelay /bin/bash`
 
 > **Warning**
 > Commands below will delete all data volumes not associated with a container!
@@ -88,11 +76,11 @@ Open a bash shell on running container name: `docker exec -it nxcloud /bin/bash`
 > Remove container & persistent volumes(clean slate): `docker-compose down && docker volume prune`
 
 ## Updating ##
-1. Pull the latest container.  `docker pull deepwoods/nxcloud:latest`
-2. Stop and remove the current container.  `docker stop nxcloud && docker rm nxcloud `
+1. Pull the latest container.  `docker pull jimusik/nxrelay:latest`
+2. Stop and remove the current container.  `docker stop nxrelay && docker rm nxrelay `
 > **Note** If using docker-compose:  `docker-compose down`
 3. Run the new container with the same command from above.  [Detached container](#detached-container-with-persistent-data-volumes)
 > **Note** If using docker-compose:  `docker-compose up -d`
 4. Make sure that the container is running.  `docker ps`
-5. Check the container logs if unable to access the GUI for some reason.  `docker logs nxcloud`
+5. Check the container logs if unable to access the GUI for some reason.  `docker logs nxrelay`
 > **Note** If using docker-compose:  `docker-compose logs`
