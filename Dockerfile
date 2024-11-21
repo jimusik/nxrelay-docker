@@ -3,7 +3,7 @@ FROM ubuntu:latest
 LABEL maintainer="Jim Davidson"
 LABEL version="2.8.8"
 LABEL release-date="2024-07-31"
-LABEL source="https://github.com/deepwoods/nxrelay-docker"
+LABEL source="https://github.com/jimusik/nxrelay-docker"
 
 ENV TZ=${TZ:-Etc/UTC}
 
