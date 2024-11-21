@@ -22,7 +22,7 @@ docker run -dt --name nxcloud \
   -e TZ=America/Chicago \
   -v nxcconf:/nxrelay/conf \
   -v nxcdb:/nxrelay/db \
-  -v nxclog:/nxreloay/log \
+  -v nxclog:/nxrelay/log \
   -p 53:53/udp \
   jimusik/nxrelay:latest
 ```
